@@ -10,13 +10,17 @@
   <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script>
+    const NomeContext = React.createContext('nome');
+
     function MyComponent1() {
-      const meuNome = 'Ayrton';
+      const meuNome = 'Ayrton Teshima';
       return (
-        React.createElement('div', { className: 'componente-1' },
-          React.createElement(MyComponent2, { nome: meuNome })
+        React.createElement(NomeContext.Provider, { value: meuNome },
+          React.createElement('div', { className: 'componente-1' },
+            React.createElement(MyComponent2, { nome: meuNome })
+          )
         )
-      )
+      )        
     }
 
     function MyComponent2(props) {
@@ -37,10 +41,14 @@
 
     function MyComponent4(props) {
       return (
-        React.createElement('div', { className: 'componente-4' },
-          React.createElement('p', null, props.nome)
+        React.createElement(NomeContext.Consumer, null,
+          (nomeContext) => (
+            React.createElement('div', { className: 'componente-4' },
+              React.createElement('p', null, nomeContext)
+            )
+          )
         )
-      )
+      )        
     }
 
     function MyComponent() {
