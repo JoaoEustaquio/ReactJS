@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React - A Melhor Aula de Todas</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script>
+    function MyComponent1() {
+      const meuNome = 'Ayrton';
+      return (
+        React.createElement('div', { className: 'componente-1' },
+          React.createElement(MyComponent2, { nome: meuNome })
+        )
+      )
+    }
+
+    function MyComponent2(props) {
+      return (
+        React.createElement('div', { className: 'componente-2' },
+          React.createElement(MyComponent3, { nome: props.nome })
+        )
+      )
+    }
+
+    function MyComponent3(props) {
+      return (
+        React.createElement('div', { className: 'componente-3' },
+          React.createElement(MyComponent4, { nome: props.nome })
+        )
+      )
+    }
+
+    function MyComponent4(props) {
+      return (
+        React.createElement('div', { className: 'componente-4' },
+          React.createElement('p', null, props.nome)
+        )
+      )
+    }
+
+    function MyComponent() {
+      return React.createElement('div', { id: 'components' },
+        React.createElement(MyComponent1)
+      )
+    }
+
+    ReactDOM.render(
+      React.createElement(MyComponent),
+      document.getElementById('app')
+    )
+  </script>
+</body>
+</html>
