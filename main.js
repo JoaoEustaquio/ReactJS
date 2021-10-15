@@ -1,11 +1,10 @@
 const NomeContext = React.createContext("nome");
 
-function MyComponent1() {
-  const meuNome = "Ayrton Teshima";
+function MyComponent1(props) {
   return (
     <div className="component-1">
       <MyComponent2>
-        <MyComponent3 />
+        <MyComponent3 onClickIncrementar={props.onClickIncrementar} />
       </MyComponent2>
     </div>
   );
@@ -22,7 +21,7 @@ function MyComponent2(props) {
   );
 }
 
-function MyComponent3() {
+function MyComponent3(props) {
   const [telefone, setTelefone] = React.useState("22 123456789");
 
   setTimeout(function () {
@@ -31,7 +30,7 @@ function MyComponent3() {
 
   return (
     <div className="component-3">
-      <MyComponent4 telefone={telefone} />
+      <MyComponent4 telefone={telefone}  onClickIncrementar={props.onClickIncrementar} />
     </div>
   );
 }
@@ -45,19 +44,47 @@ function MyComponent4(props) {
 
   return (
     <div className="component-4">
-      <p>
-        Component 4 {idade} - {props.telefone}
-      </p>
+      <p>Component 4 {idade} - {props.telefone}</p>
+      <button type="button" onClick={props.onClickIncrementar}>Incrementar</button>
     </div>
-  );
+  )
 }
 
-function MyComponent() {
+function MyComponent(props) {
   return (
     <div id="components">
-      <MyComponent1 />
+      <MyComponent1 onClickIncrementar={props.onClickIncrementar} />
     </div>
   );
 }
 
-ReactDOM.render(<MyComponent />, document.getElementById("app"));
+function MyComponentIrmao(props) {
+  return (
+    <div id="component-irmao">
+      <MyComponentIrmao2 contador={props.contador} />
+    </div>
+  )
+}
+
+function MyComponentIrmao2(props) {
+  return (
+    <h2>Contador: { props.contador }</h2>
+  )
+}
+
+function AppComponent() {
+  const [ contador, incrementaContador ] = React.useState(0);
+
+  const clickIncrementa = function() {
+    incrementaContador(contador + 1)
+  }
+
+  return (
+    <React.Fragment>
+      <MyComponent onClickIncrementar={clickIncrementa} />
+      <MyComponentIrmao contador={contador} />
+    </React.Fragment>
+  );
+}
+
+ReactDOM.render(<AppComponent />, document.getElementById('app'));
