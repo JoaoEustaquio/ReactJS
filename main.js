@@ -67,13 +67,18 @@ function MyComponentIrmao(props) {
 }
 
 function MyComponentIrmao2(props) {
+  
+  React.useEffect(function() {
+    localStorage.setItem('contador', props.contador)
+  });
+  
   return (
     <h2>Contador: { props.contador }</h2>
   )
 }
 
 function AppComponent() {
-  const [ contador, incrementaContador ] = React.useState(0);
+  const [ contador, incrementaContador ] = React.useState(parseInt(localStorage.getItem('contador'), 10) || 0);
 
   const clickIncrementa = function() {
     incrementaContador(contador + 1)
